@@ -1,8 +1,12 @@
 import React from 'react'
-import { Image, Text, View, TextInput,StyleSheet, ToastAndroid } from 'react-native';
+import { Image, Text, View, TextInput,StyleSheet, ToastAndroid, TouchableOpacity } from 'react-native';
 import { RoundedButton } from '../../components/RoundedButton';
-
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from '../../../App';
  const HomeScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   return (
     <View style={styles.container}>
       <Image
@@ -56,7 +60,9 @@ import { RoundedButton } from '../../components/RoundedButton';
         </View>
         <View style={styles.containerText}>
           <Text>Don't have account ?</Text>
-          <Text style={styles.signUpText}>Sign up</Text>
+          <TouchableOpacity onPress={()=> navigation.navigate('RegisterScreen')}>
+           <Text style={styles.signUpText}>Sign up</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

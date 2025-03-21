@@ -14,16 +14,16 @@ import { RootStackParamList } from '../../../App';
         source={require('../../../assets/chef.png')}
       />
       {/**CONTENEDOR DE LA IMAGEN DEL LOGO Y EL TEXTO */}
-      {/*<View style={styles.logoContainer}>
+      <View style={styles.logoContainer}>
         <Image 
           style={styles.logoImage}
-          source={require('./assets/logo.png')}
+          source={require('../../../assets/user_image.png')}
         />
         <Text style={styles.logoText}>
           Just Eat
         </Text>
       </View>
-      {/**CONTENEDOR DEL FORMULARIO */}
+      
       <View style={styles.form}>
 
       <Text style ={styles.formText}>Log in to login</Text>

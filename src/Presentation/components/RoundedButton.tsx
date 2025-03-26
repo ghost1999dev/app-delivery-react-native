@@ -9,7 +9,7 @@ export const RoundedButton = ({text,onPress}:Props) => {
   return (
     <TouchableOpacity
         style={style.roundedButton}
-        onPress={()=>{onPress}} 
+        onPress={onPress} 
     >
         <Text style={style.textEnter}>{text}</Text>
         

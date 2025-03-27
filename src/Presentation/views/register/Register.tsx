@@ -4,7 +4,18 @@ import { RoundedButton } from '../../components/RoundedButton';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../../../../App';
 import { useNavigation } from '@react-navigation/native';
+import registerViewModel from "./ViewModel"
+import { CustomTextInput } from '../../components/CustomTextInput';
 export const RegisterScreen = () => {
+  const {
+    name,
+    lastname,
+    phone,
+    email,
+    password,
+    confirmPassword,
+    onChange
+  }=registerViewModel()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   return (
       <View style={styles.container}>
@@ -25,80 +36,63 @@ export const RegisterScreen = () => {
         
         <View style={styles.form}>
           <Text style ={styles.formText}>Registrarse</Text>
-            <View style={styles.formInput}>
-              <Image
-                style={styles.formInputImageEmail}
-                source={require('../../../../assets/user.png')}
-              >
-              </Image>
-              <TextInput
-                style={styles.formTextInput}
-                placeholder="Nombres"
-                keyboardType="default"
-              >
-              </TextInput>
-            </View>
-            <View style={styles.formInput}>
-              <Image
-                style={styles.formInputImageEmail}
-                source={require('../../../../assets/my_user.png')}
-              >
-              </Image>
-              <TextInput
-                style={styles.formTextInput}
-                placeholder="Apellidos"
-                keyboardType="default"
-                
-              >
-              </TextInput>
-            </View>
-            <View style={styles.formInput}>
-              <Image
-                style={styles.formInputImageEmail}
-                source={require('../../../../assets/email.png')}
-              />
-              <TextInput
-                style={styles.formTextInput}
-                placeholder='Correo electronico'
-                keyboardType='email-address'
-              >
-              </TextInput>
-            </View>
-            <View style={styles.formInput}>
-              <Image
-                style={styles.formInputImageEmail}
-                source={require('../../../../assets/phone.png')}
-              />
-              <TextInput
-                placeholder='Telefono'
-                style={styles.formTextInput}
-                keyboardType='phone-pad'
-              ></TextInput>
-            </View>
-            <View style={styles.formInput}>
-              <Image
-                style={styles.formInputImageEmail}
-                source={require('../../../../assets/password.png')}
-              />
-              <TextInput
-                style={styles.formTextInput}
-                placeholder='Contraseña'
-                keyboardType='default'
-                secureTextEntry={true}
-              ></TextInput>
-            </View>
-            <View style={styles.formInput}>
-              <Image
-                style={styles.formInputImageEmail}
-                source={require('../../../../assets/confirm_password.png')}
-              />
-              <TextInput
-                style={styles.formTextInput}
-                placeholder='Confirmar Contraseña'
-                keyboardType='default'
-                secureTextEntry={true}
-              ></TextInput>
-            </View>
+
+            <CustomTextInput
+              image={require('../../../../assets/user.png')}
+              placeholder='Nombres'
+              keyboardType='default'
+              value={name}
+              property='name'
+              onChangeText={onChange}
+
+            />
+            <CustomTextInput
+              image={require('../../../../assets/my_user.png')}
+              placeholder='Apellidos'
+              keyboardType='default'
+              value={lastname}
+              property='lastname'
+              onChangeText={onChange}
+
+            />
+            <CustomTextInput
+              image={require('../../../../assets/email.png')}
+              placeholder='Correo electronico'
+              keyboardType='email-address'
+              value={email}
+              property='email'
+              onChangeText={onChange}
+
+            />
+            <CustomTextInput
+              image={require('../../../../assets/phone.png')}
+              placeholder='Telefono'
+              keyboardType='phone-pad'
+              value={phone}
+              property='phone'
+              onChangeText={onChange}
+
+            />
+             <CustomTextInput
+              image={require('../../../../assets/password.png')}
+              placeholder='Contraseña'
+              keyboardType='default'
+              value={password}
+              property='password'
+              secureTextEntry={true}
+              onChangeText={onChange}
+
+            />
+            <CustomTextInput
+              image={require('../../../../assets/confirm_password.png')}
+              placeholder='Confirmar contraseña'
+              keyboardType='default'
+              value={confirmPassword}
+              property='confirmPassword'
+              secureTextEntry={true}
+              onChangeText={onChange}
+
+            />
             <View style={{marginTop:30}}> 
               <RoundedButton 
                 text='Confirmar'

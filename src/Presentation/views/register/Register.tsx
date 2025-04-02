@@ -1,5 +1,5 @@
 import React from 'react'
-import { View,Text,StyleSheet,Image,TextInput, TouchableOpacity, ToastAndroid } from 'react-native'
+import { View,Text,StyleSheet,Image,TextInput, TouchableOpacity, ToastAndroid, ScrollView } from 'react-native'
 import { RoundedButton } from '../../components/RoundedButton';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../../../../App';
@@ -36,6 +36,7 @@ export const RegisterScreen = () => {
         </View>
         
         <View style={styles.form}>
+          <ScrollView>
           <Text style ={styles.formText}>Registrarse</Text>
 
             <CustomTextInput
@@ -100,7 +101,10 @@ export const RegisterScreen = () => {
                 onPress={()=> register()}
               />
             </View>
+            </ScrollView>
         </View>
+        
+        
       </View>
     )
 }
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
   },
   form:{
     width:'100%',
-    height:'70%',
+    height:'75%',
     backgroundColor:'white',
     position:'absolute',
     bottom:0,

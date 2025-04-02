@@ -14,7 +14,8 @@ export const RegisterScreen = () => {
     email,
     password,
     confirmPassword,
-    onChange
+    onChange,
+    register
   }=registerViewModel()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   return (
@@ -96,7 +97,7 @@ export const RegisterScreen = () => {
             <View style={{marginTop:30}}> 
               <RoundedButton 
                 text='Confirmar'
-                onPress={()=> ToastAndroid.show('Hola',50)}
+                onPress={()=> register()}
               />
             </View>
         </View>

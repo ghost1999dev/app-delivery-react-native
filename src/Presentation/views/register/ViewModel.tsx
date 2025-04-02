@@ -1,4 +1,7 @@
 import React, {useState}from 'react'
+import { ApiDelivery } from '../../../Data/api/ApiDelivery';
+import { RegisterAuthUseCase } from '../../../Domain/useCases/auth/RegisterAuth';
+import { LogBox } from 'react-native';
 
 const RegisterViewModel = () => {
     const [values, setValues] = useState({
@@ -12,9 +15,14 @@ const RegisterViewModel = () => {
     const onChange=(property:string,value:any)=>{
         setValues({...values,[property]:value})
     }
+
+    const register = async()=>{
+      const {result, error} = await RegisterAuthUseCase(values)
+    }
   return {
     ...values,
-    onChange
+    onChange,
+    register
   }
 }
 

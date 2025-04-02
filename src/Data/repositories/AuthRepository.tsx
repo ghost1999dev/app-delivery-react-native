@@ -5,7 +5,7 @@ import { ApiDelivery } from "../sources/api/ApiDelivery";
 import { ResponseApiDelivery } from "../sources/models/ResponseApiDelivery";
 
 export class AuthRepositoryImpl implements AuthRepository {
-  async register(user: User): Promise<ResponseApiDelivery> {
+  async register(user: User): Promise<ResponseApiDelivery> { 
     try {
       const response = await ApiDelivery.post<ResponseApiDelivery>("/users/save", user);
       return Promise.resolve(response.data)

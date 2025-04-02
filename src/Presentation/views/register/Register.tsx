@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { View,Text,StyleSheet,Image,TextInput, TouchableOpacity, ToastAndroid, ScrollView } from 'react-native'
 import { RoundedButton } from '../../components/RoundedButton';
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -15,8 +15,16 @@ export const RegisterScreen = () => {
     password,
     confirmPassword,
     onChange,
-    register
+    register,
+    message
   }=registerViewModel()
+  useEffect(() => {
+    if(message !=''){
+      ToastAndroid.show(message,ToastAndroid.LONG)
+    }
+    
+  }, [message])
+  
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   return (
       <View style={styles.container}>
@@ -103,8 +111,6 @@ export const RegisterScreen = () => {
             </View>
             </ScrollView>
         </View>
-        
-        
       </View>
     )
 }

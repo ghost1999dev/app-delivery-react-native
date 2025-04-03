@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Image,
   Text,
@@ -16,7 +16,13 @@ import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
 const HomeScreen = () => {
-  const { email, password, onChange } = useViewModel();
+  const { email, password, onChange,login,message } = useViewModel();
+  useEffect(() => {
+    if (message !== '') {
+      ToastAndroid.show(message,ToastAndroid.LONG)
+    }
+  }, [message])
+  
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <View style={styles.container}>
@@ -57,7 +63,7 @@ const HomeScreen = () => {
         />
         
         <View style={{ marginTop: 30 }}>
-          <RoundedButton text="Log up" onPress={print} />
+          <RoundedButton text="Log up" onPress={login} />
         </View>
         <View style={styles.containerText}>
           <Text>Don't have account ?</Text>

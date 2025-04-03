@@ -22,8 +22,6 @@ export class AuthRepositoryImpl implements AuthRepository {
           email,
           password
         })
-       
-        
         return Promise.resolve(response.data)
       } catch (error) {
         let e = (error as AxiosError)

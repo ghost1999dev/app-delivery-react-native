@@ -11,19 +11,24 @@ import {
 import { RoundedButton } from "../../components/RoundedButton";
 import { useNavigation } from "@react-navigation/native";
 
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
-const HomeScreen = () => {
-  const { email, password, onChange,login,message } = useViewModel();
+interface Props extends StackScreenProps<RootStackParamList,'HomeScreen'>{}
+
+export const HomeScreen = ({navigation}:Props) => {
+  const { email, password, onChange,login,message,user } = useViewModel();
   useEffect(() => {
     if (message !== '') {
       ToastAndroid.show(message,ToastAndroid.LONG)
     }
   }, [message])
-  
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  useEffect(() => {
+    if(user?.id !== null && user?.id !== undefined){
+      navigation.navigate('ProfileInfoScreen')
+    }
+  }, [user])
   return (
     <View style={styles.container}>
       <Image

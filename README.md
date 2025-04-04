@@ -1,8 +1,8 @@
 # App Delivery - React Native
 <p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/800px-React-icon.svg.png" alt="ReactNative" width="150" />
+  <img src="https://miro.medium.com/v2/resize:fit:1400/0*IPRVE5v1svBfc_Lh.png" alt="ExpoCLI" width="150" />
   <img src="https://raw.githubusercontent.com/remojansen/logo.ts/master/ts.png" alt="TypeScript" width="150" />
-  <img src="https://avatars.githubusercontent.com/u/20165699?s=200&v=4" alt="TypeORM" width="150" />
-  <img src="https://www.angularminds.com/tech-logos/nodejs-logo.svg" alt="TypeORM" width="150" />
 </p>
 
 ## Descripcion

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { ApiDelivery } from "../../../Data/sources/api/ApiDelivery";
 import { RegisterAuthUseCase } from "../../../Domain/useCases/auth/RegisterAuth";
-import { LogBox } from "react-native";
+import { Alert, LogBox } from "react-native";
+import * as ImagePicker from 'expo-image-picker'
 
 const RegisterViewModel = () => {
   const [values, setValues] = useState({
@@ -10,9 +11,56 @@ const RegisterViewModel = () => {
     phone: "",
     email: "",
     password: "",
+    image:"",
     confirmPassword: "",
   });
+  const [image, setImage] = useState<string |null>(null)
   const [message, setMessage] = useState('')
+  const requestPermissions = async ():Promise<Boolean>=>{
+    const {status: cameraStatus}= await ImagePicker.requestCameraPermissionsAsync()
+    const {status: galleryStatus}= await ImagePicker.requestMediaLibraryPermissionsAsync()
+    if(cameraStatus !== 'granted' || galleryStatus !== 'granted'){
+      Alert.alert('Permiso requerido', 'Se necesita permisos para acceder a la camara y a la galeria')
+      return false;
+    }
+    return true
+  }
+  const takePhoto = async ()=>{
+    const hasPermission = requestPermissions()
+    if(!hasPermission) return
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes:ImagePicker.MediaTypeOptions.All,
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:1
+      })
+      if(!result.canceled){
+        setImage(result.assets[0].uri)
+      }
+    } catch (error) {
+      console.log('Error al utilizar la camara');
+      
+    }
+    
+  }
+  const pickImage = async ()=>{
+    const hasPermission = requestPermissions()
+    if(!hasPermission) return
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:1
+      })
+      if(!result.canceled){
+        setImage(result.assets[0].uri)
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   const onChange = (property: string, value: any) => {
     setValues({ ...values, [property]: value });
   };
@@ -60,7 +108,10 @@ const RegisterViewModel = () => {
     ...values,
     onChange,
     register,
-    message
+    message,
+    image,
+    takePhoto,
+    pickImage
   };
 };
 

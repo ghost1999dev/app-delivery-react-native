@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { View,Text,StyleSheet,Image,TextInput, TouchableOpacity, ToastAndroid, ScrollView } from 'react-native'
 import { RoundedButton } from '../../components/RoundedButton';
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -6,6 +6,7 @@ import { RootStackParamList } from '../../../../App';
 import { useNavigation } from '@react-navigation/native';
 import registerViewModel from "./ViewModel"
 import { CustomTextInput } from '../../components/CustomTextInput';
+import {ModalPickImage} from '../../components/ModalPickImage';
 export const RegisterScreen = () => {
   const {
     name,
@@ -21,6 +22,7 @@ export const RegisterScreen = () => {
     takePhoto,
     pickImage
   }=registerViewModel()
+  const [modalVisible,setModalVisible]=useState(false)
   useEffect(() => {
     if(message !=''){
       ToastAndroid.show(message,ToastAndroid.LONG)
@@ -37,7 +39,7 @@ export const RegisterScreen = () => {
         />
         {/**CONTENEDOR DE LA IMAGEN DEL LOGO Y EL TEXTO */}
         <View style={styles.logoContainer}>
-          <TouchableOpacity onPress={()=>{takePhoto()}}>
+          <TouchableOpacity onPress={()=>{setModalVisible(true)}}>
             {
               image
               ?<Image 
@@ -124,6 +126,15 @@ export const RegisterScreen = () => {
             </View>
             </ScrollView>
         </View>
+
+        <ModalPickImage
+          onPickCamera={takePhoto}
+          onPickGallery={pickImage}
+          modalUseState={modalVisible}
+          setModalUseState={setModalVisible}
+        
+        />
+          
       </View>
     )
 }

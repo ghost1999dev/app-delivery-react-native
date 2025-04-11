@@ -1,3 +1,5 @@
+import { Rol } from "./Rol"
+
 export interface User{
     id?:             string
     name:           string
@@ -7,4 +9,5 @@ export interface User{
     password:       string
     confirmPassword:string
     token?:         string
+    roles?:         Rol[]
 }

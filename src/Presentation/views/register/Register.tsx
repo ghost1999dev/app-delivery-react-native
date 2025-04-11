@@ -1,13 +1,15 @@
 import React,{useEffect, useState} from 'react'
-import { View,Text,StyleSheet,Image,TextInput, TouchableOpacity, ToastAndroid, ScrollView } from 'react-native'
+import { View,Text,StyleSheet,Image,TextInput,ActivityIndicator, TouchableOpacity, ToastAndroid, ScrollView } from 'react-native'
 import { RoundedButton } from '../../components/RoundedButton';
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from '../../../../App';
 import { useNavigation } from '@react-navigation/native';
 import registerViewModel from "./ViewModel"
 import { CustomTextInput } from '../../components/CustomTextInput';
 import {ModalPickImage} from '../../components/ModalPickImage';
-export const RegisterScreen = () => {
+import { MyColors } from '../../theme/AppTheme';
+interface Props extends StackScreenProps<RootStackParamList,'RegisterScreen'>{}
+export const RegisterScreen = ({navigation}:Props) => {
   const {
     name,
     lastname,
@@ -20,9 +22,17 @@ export const RegisterScreen = () => {
     message,
     image,
     takePhoto,
-    pickImage
+    pickImage,
+    user,
+    isLoading
   }=registerViewModel()
   const [modalVisible,setModalVisible]=useState(false)
+  useEffect(() => {
+    if(user?.id !== null && user?.id !== undefined){
+      navigation.replace('ProfileInfoScreen')
+    }
+  }, [user])
+  
   useEffect(() => {
     if(message !=''){
       ToastAndroid.show(message,ToastAndroid.LONG)
@@ -30,9 +40,10 @@ export const RegisterScreen = () => {
     
   }, [message])
   
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  
   return (
       <View style={styles.container}>
+        
         <Image
           style={styles.imageBackground}
           source={require('../../../../assets/chef.png')}
@@ -121,20 +132,26 @@ export const RegisterScreen = () => {
             <View style={{marginTop:30}}> 
               <RoundedButton 
                 text='Confirmar'
-                onPress={()=> register()}
+                onPress={()=> 
+                  register()
+                }
               />
             </View>
             </ScrollView>
+            
         </View>
-
+        {
+            isLoading && <ActivityIndicator style={styles.loadingCircle} size="large" color={MyColors.primary}  />
+        }
+        
+        
         <ModalPickImage
           onPickCamera={takePhoto}
           onPickGallery={pickImage}
           modalUseState={modalVisible}
           setModalUseState={setModalVisible}
-        
         />
-          
+       
       </View>
     )
 }
@@ -208,5 +225,12 @@ const styles = StyleSheet.create({
     borderBottomWidth:1,
     borderBottomColor:'orange',
     fontWeight:'bold'
+  },
+  loadingCircle:{
+    bottom:0,
+    position:'absolute',
+    left:0,
+    top:0,
+    right:0
   }  
   });

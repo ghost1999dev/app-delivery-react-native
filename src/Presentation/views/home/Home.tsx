@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   Text,
@@ -15,37 +15,30 @@ import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
-interface Props extends StackScreenProps<RootStackParamList,'HomeScreen'>{}
+interface Props extends StackScreenProps<RootStackParamList, "HomeScreen"> {}
 
-export const HomeScreen = ({navigation}:Props) => {
-  const { email, password, onChange,login,message,user } = useViewModel();
+export const HomeScreen = ({ navigation }: Props) => {
+  const { email, password, onChange, login, message, user } = useViewModel();
   useEffect(() => {
-    if (message !== '') {
-      ToastAndroid.show(message,ToastAndroid.LONG)
+    if (message !== "") {
+      ToastAndroid.show(message, ToastAndroid.LONG);
     }
-  }, [message])
+  }, [message]);
   useEffect(() => {
-    if(user?.id !== null && user?.id !== undefined){
-      navigation.replace('ProfileInfoScreen')
+    if (user?.id !== null && user?.id !== undefined) {
+      if (user.roles?.length! > 1) {
+        navigation.replace("RolesScreen");
+      } else {
+        navigation.replace("ProfileInfoScreen");
+      }
     }
-  }, [user])
+  }, [user]);
   return (
     <View style={styles.container}>
       <Image
         style={styles.imageBackground}
         source={require("../../../../assets/chef.png")}
       />
-      {/**CONTENEDOR DE LA IMAGEN DEL LOGO Y EL TEXTO */}
-      {/**<View style={styles.logoContainer}>
-        <Image 
-          style={styles.logoImage}
-          source={require('../../../../assets/logo.png')}
-        />
-        <Text style={styles.logoText}>
-          Just Eat
-        </Text>
-      </View>**/}
-
       <View style={styles.form}>
         <Text style={styles.formText}>Log in to login</Text>
 
@@ -66,7 +59,7 @@ export const HomeScreen = ({navigation}:Props) => {
           onChangeText={onChange}
           property="password"
         />
-        
+
         <View style={{ marginTop: 30 }}>
           <RoundedButton text="Log up" onPress={login} />
         </View>

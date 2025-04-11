@@ -3,6 +3,10 @@ import { ApiDelivery } from "../../../Data/sources/api/ApiDelivery";
 import { RegisterAuthUseCase } from "../../../Domain/useCases/auth/RegisterAuth";
 import { Alert, LogBox } from "react-native";
 import * as ImagePicker from 'expo-image-picker'
+import { RegisterWithImageAuthUseCase } from "../../../Domain/useCases/auth/RegisterWithImageAuth";
+import { useUserLocal } from "../../hooks/useUserLocal";
+import { GetUserUseCase } from "../../../Domain/useCases/userLocal/GetUserLocal";
+import { SaveUserUseCase } from "../../../Domain/useCases/userLocal/SaveUserLocal";
 
 const RegisterViewModel = () => {
   const [values, setValues] = useState({
@@ -14,8 +18,11 @@ const RegisterViewModel = () => {
     image:"",
     confirmPassword: "",
   });
+  const [file, setfile] = useState<ImagePicker.ImageInfo>()
   const [image, setImage] = useState<string |null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const {user,getSession}=useUserLocal()
   const requestPermissions = async ():Promise<Boolean>=>{
     const {status: cameraStatus}= await ImagePicker.requestCameraPermissionsAsync()
     const {status: galleryStatus}= await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -36,25 +43,30 @@ const RegisterViewModel = () => {
         quality:1
       })
       if(!result.canceled){
+        onChange('image',result.assets[0].uri)
         setImage(result.assets[0].uri)
+        setfile(result.assets[0])
       }
+      
     } catch (error) {
       console.log('Error al utilizar la camara');
       
     }
     
   }
-  const pickImage = async ()=>{
+  const pickImage = async ()=>{   
     const hasPermission = requestPermissions()
     if(!hasPermission) return
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing:true,
-        aspect:[4,3],
+        aspect:[4,3],  
         quality:1
       })
       if(!result.canceled){
+        onChange('image',result.assets[0].uri)
         setImage(result.assets[0].uri)
+        setfile(result.assets[0])
       }
     } catch (error) {
       console.log(error);
@@ -67,7 +79,15 @@ const RegisterViewModel = () => {
 
   const register = async () => {
     if (isValidForm()) {
-      const response = await RegisterAuthUseCase(values);  
+      setIsLoading(true)
+      const response = await RegisterWithImageAuthUseCase(values,file!);  
+      if (response.success) {
+        setIsLoading(false)
+        await SaveUserUseCase(response.data)
+        getSession()
+      }else{
+        setMessage(response.message)
+      }
     }
     
   };
@@ -102,6 +122,10 @@ const RegisterViewModel = () => {
       setMessage('Las contraseñas no coinciden')
       return false
     }
+    if (values.image === '') {
+      setMessage('Debes de seleccionar una imagen')
+      return false
+    }
     return true
   }
   return {
@@ -111,7 +135,9 @@ const RegisterViewModel = () => {
     message,
     image,
     takePhoto,
-    pickImage
+    pickImage,
+    user,
+    isLoading
   };
 };
 

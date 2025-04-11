@@ -19,7 +19,6 @@ const HomeViewModel = () => {
 
   const getData = async () => {
     const user = await GetUserUseCase();
-    console.log("SESSION USER" + JSON.stringify(user));
   };
   const onChange = (property: string, value: any) => {
     setValues({ ...values, [property]: value });

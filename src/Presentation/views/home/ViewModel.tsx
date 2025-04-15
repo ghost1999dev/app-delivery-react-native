@@ -9,7 +9,7 @@ const HomeViewModel = () => {
     password: "",
   });
   const { user,getSession } = useUserLocal();
-  console.log("USER FROM CUSTOM HOOK " + JSON.stringify(user));
+  
 
   const [message, setMessage] = useState("");
 

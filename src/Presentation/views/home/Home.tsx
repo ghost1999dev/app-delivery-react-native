@@ -16,7 +16,6 @@ import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
 interface Props extends StackScreenProps<RootStackParamList, "HomeScreen"> {}
-
 export const HomeScreen = ({ navigation }: Props) => {
   const { email, password, onChange, login, message, user } = useViewModel();
   useEffect(() => {
@@ -29,7 +28,7 @@ export const HomeScreen = ({ navigation }: Props) => {
       if (user.roles?.length! > 1) {
         navigation.replace("RolesScreen");
       } else {
-        navigation.replace("ProfileInfoScreen");
+        navigation.replace("ClientTabsNavigatorScreen");
       }
     }
   }, [user]);

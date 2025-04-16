@@ -43,12 +43,10 @@ export const ClientTabsNavigatorScreen = ({navigation}:Props) => {
         name="ProfileInfoScreen" 
         component={ProfileInfoScreen}
         options={{
-          title:'Ordenes',
-          tabBarLabel:'Ordenes',
+          title:'Tu perfil',
+          tabBarLabel:'Perfil',
           tabBarIcon:({color})=>(
             <Image
-
-            
               source={require('../../../assets/user_menu.png')}
               style={{width:30, height:30}}  
             />
